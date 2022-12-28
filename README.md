@@ -9,4 +9,5 @@ The data obtained was then used in a number of investigations. First, we attempt
 
 ## Web Scraping Nasdaq Baltic
 
-(https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/tree/main/images/tickers.png?raw=true)
+([here](https://colab.research.google.com/drive/1tPoi5xFyeMH-KaidEK_y8M8Ku9Sz0VwN#scrollTo=CKYZT89nywdy&line=1&uniqifier=1))
+
