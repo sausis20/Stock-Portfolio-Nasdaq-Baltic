@@ -9,4 +9,4 @@ The data obtained was then used in a number of investigations. First, we attempt
 
 ## Web Scraping Nasdaq Baltic
 
-![Example of securities in the Baltic Main List](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![Example of securities in the Baltic Main List](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/tree/main/images/tickers.jpg?raw=true)
