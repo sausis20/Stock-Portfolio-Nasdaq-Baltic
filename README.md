@@ -124,4 +124,4 @@ The study has shown some really interesting results and gave me a chance to inve
 
 ## References
 
-This work was inspired and heavily realies on work from Nate Cibik's post on medium, which can be found [here: ](https://medium.com/analytics-vidhya/predicting-returns-with-fundamental-data-and-machine-learning-in-python-a0e5757206e8)
+This work was inspired and heavily relies on work from Nate Cibik's post on medium, which can be found [here: ](https://medium.com/analytics-vidhya/predicting-returns-with-fundamental-data-and-machine-learning-in-python-a0e5757206e8)
