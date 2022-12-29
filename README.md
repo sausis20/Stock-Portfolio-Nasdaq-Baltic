@@ -120,3 +120,8 @@ After simulating the bull market (I did this by multiplying the actual returns b
 The study has shown some really interesting results and gave me a chance to investigate an interesting dataset, but an additional study on this subject would be appropriate. Here are a few things which could be improved in future work: 
 -   The companies in the Nasdaq Baltic Main List has data for just 30 securities, however the total number of features were 105 (if we exclude features related to pricing information) and 120 features (if we include them). Generally, we would want to have more observations than features, so the model could be improved by making it more parsimonious (checking and removing features that add little or no explanatory power to the model).
 -   Additionally, it is relatively difficult to get a working model with such a few observations, therefore it could be worthwile to repurpose this study to include more observations, for example by analysing the whole Central-Eastern European stock market or including other markets that have comparable charachteristics as the Baltic stock market.
+
+
+## References
+
+This work was inspired and heavily realies on work from Nate Cibik's post on medium, which can be found [here: ](https://medium.com/analytics-vidhya/predicting-returns-with-fundamental-data-and-machine-learning-in-python-a0e5757206e8)
