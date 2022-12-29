@@ -9,7 +9,7 @@ The data obtained was then used in a number of investigations. First, I attempte
 
 ## Web Scraping Nasdaq OMX Baltic
 
-[Link to the scrape file](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/ticker_scrape.ipynb)
+[Link to the scrape notebook](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/ticker_scrape.ipynb)
 
 Although there are many companies listed in Nasdaq OMX Baltic, I scraped only the securities from the Baltic Main List, as these securities have the highest Market Cap and liquidity. Here's an example of how the data looked after the scrape:
 ![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/tickers.png)
@@ -20,6 +20,15 @@ Although there are many companies listed in Nasdaq OMX Baltic, I scraped only th
 
 Next, I pulled all fundamental companies data - Company Info, Balance Sheet, Profit & Loss, Cash Flow, Dvidends, Major and Institutional Holders, as well as Sustainability and Recommendations - but companies in the Baltic market did not have any data in these categories. 
 
-![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/pl.jpg)
+## Data exploration and pricing data pull
+
+[Link to the data exploration and pricing data pull](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/data_exploration.ipynb)
+
+I first visualized some features to get a better sense of the data I'm working with, for example the Market Capitalization.
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/marketcap.png)
+
+Also I pulled the closing stock prices from the period when the fundamental data was published (around 2022-05-21) to the time of this study (2022-11-30) - approximately 6 months worth of data. At this point I also converted the prices to log prices (for various reasons discussed in the notebook) and visualized them.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/logreturns.png)
 
 ## Modeling the returns
