@@ -54,3 +54,31 @@ For the modeling of the current price, Gradient Boosting Regressor was the best 
 To confirm the results, I run a simple linear regression to see if there is any relationship between the residuals and the returns. Unfortunately, the findings did't show such a relationship. The determination coefficient (R2) was just 0.03, which did not indicate a powerful statistical relationship. At this point it was cocluded that the hypothesis that the residuals of the asset pricing model would be correlated to the returns over the six month period since the time when the fundamental data was published is not supported.
 
 ![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/returnsresiduals.png)
+
+## Modeling returns
+
+[Link to the notebook](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/modeling_returns.ipynb)
+
+In the second part of the analysis I modeled the returns over the six month period since the companies fundamental data was published. This was done by creating a binary classifier to predict gainers/losers (returns above or less than or equal to zero). The model was then tested on the holdout set to observe the results.
+
+The problem could be described as follows:
+
+null hypothesis - the securities fundamental data has no predictive information about the securities returns
+alternative hypothesis - there is predictive information about securities returns in their fundamental data
+
+First, I tackled multicollinearity among the features, removing the ones with the highest values. Although this step was not mandatory, as I was not checking feature importance, multicollinearity may have still impacted the model negatively. 
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/corr.png)
+
+Then, I dealt with the missing values in a similar fashion as before, that is by trying different regressor and imputation techniques and choosing the combination with the best score. This time, the target variable is a category (1 - gainer, 0 - loser), so I evaluating different classification regressors - LogisticRegression, RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier and KNeighborsClassifier. This classifier, combined with KNN imputation technique, proved to have the best performance in terms of roc_auc score of around 0.62. The reason behind choosing roc_auc score is detailed in the notebook. 
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/roc_auc.png)
+
+For the modeling of class prediction, RandomForestClassifier provided the best performance. After doing a grid search, that is tuning the model to find the best parameters to use with it, I calculated the probabilities of being assigned to class 1 or 0 on the holdout set and fit a regression line. 
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/classprob.png)
+
+The visualization of the probabilities of securities being assigned to gainers = 1, it could be seen that all of the securities in the test sample had negative returns, and the model correctly assigned most of them to the 0 (losers) category (we can see that from the x axis, which shows the probability of being in the 1 (gainers) category).
+The regression line has the slope we expected - probability of being assigned to the gainers category (1) increases as the log returns increase, so this is encouraging. However, the R-squared for this simple linear regression of the log returns using the predicted probabilities is very low at .144. The p-value, however, is only at 0.315, or in other words, there is 31.5% chance that the test results occured under the null hypothesis i.e. by pure chance.
+
+The conclusion of this is that the model is not effective in predicting the securities returns from the fundamental data. Although the regression line seems promising, the determination coefficient (R-squared) and p-test indicate that the model is not statistically significant and we can't reject the null hypothesis.
