@@ -82,3 +82,41 @@ The visualization of the probabilities of securities being assigned to gainers =
 The regression line has the slope we expected - probability of being assigned to the gainers category (1) increases as the log returns increase, so this is encouraging. However, the R-squared for this simple linear regression of the log returns using the predicted probabilities is very low at .144. The p-value, however, is only at 0.315, or in other words, there is 31.5% chance that the test results occured under the null hypothesis i.e. by pure chance.
 
 The conclusion of this is that the model is not effective in predicting the securities returns from the fundamental data. Although the regression line seems promising, the determination coefficient (R-squared) and p-test indicate that the model is not statistically significant and we can't reject the null hypothesis.
+
+## Portfolio Construction
+
+Although the model was found to not have statistical significance, I still constructed a portfolio based on its predictions, which could serve as a template if the study is performed at some point in the future with a different dataset.
+
+One potential application of this model could be demonstrated by constructing a long/short equity portfolio using the model’s predictions of over/under performers. The benefit of the long/short equity strategy is that the investor is hedged against the market by taking an equal amount of long and short positions. This way, the portfolio is not affected by overall upward or downward movement of the market, and instead is only affected by how well the investor has predicted the relative performance of securities within it. Although the model proved to be not statistically significant - mainly because of the small sample size and relatively short time period studied - the model is still correctly identifying over and under performers with an accuracy of 83,3%. Combining this predictive power with a long/short equity strategy this can lead to a consistently profitable trading strategy by both diversifying the risk of the portfolio by taking many positions and also hedging against the market. If the market moves up, the investor will gain from their long positions while losing on their short positions, and conversely if the market moves down, they will gain on their short positions while losing on their long positions. By having predicted with better than random accuracy which securities were set to over or underperform the market, the gains from the winning side of the portfolio should average out to be bigger than the losses from the losing side, no matter which way the market moves.
+
+We can simulate how such a portfolio would have performed using the securities of the test set by using the class predictions for each security. For securities that the model predicts we should short, I flipped the sign of their respective log returns to indicate that we will profit from the drop in these stocks' prices. Finally, I averaged all of these adjusted returns together. This would be the equivalent of the investor making equal dollar investments into each security in the test set, going short in any stock predicted by the model to underperform, and going long in any stock predicted to overperform.
+
+We can get a better understanding of how the securities in the test compare to the overall market by visualizing their performance.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/allmarket.png)
+
+We can see that the securities in the test set have noticably underperformed the overal market, however the overall shape of the returns is almost exactly the same. We can also see that during the study period, the overall market was in a correction / bear market. 
+
+To construct the Long/Short portfolio, I first split the securities in the test set into long and short positions. The portfolio goes long in all companies predicted to outperform, and short in the companies that are predicted to underperform. 
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/buyholdvsportfolio.png)
+
+We can see that the Long/Short portfolio significantly over performed the test set portfolio. This can be explained by the fact that because the overal market was declining over the study period, a strategy that is able to short stocks will perform significantly better than simple Buy-and-hold strategy. Next, I looked at the returns of the long side of the portfolio and the short side of the portfolio separately.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/longshort.png)
+
+Again, we see that the Short side was performing significantly better than the Long side. 
+
+Notice how both lines start at 0, but the red line finishes at around 0.18, while the green line finishes at around -0.06. The fact that the red line makes more profit than the green line loses is exactly the goal of the strategy. By going long on the securities that the model predicted will over perform, and going short on the securities that the model predicted will under perform, the aggregate result of the portfolio would be positive.
+
+At this point a question comes to mind - why not just take the short positions, and skip the long positions? The answer to this question requires knowing the general direction of the market. Since during the study period the market was in a downturn, the short side was performing better. However, if the market were to enter a bull market, we would expect the long side to become more profitable. Let's simulate how the portfolio would have behaved in the opposite (bull) market scenario.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/bullmarket.png)
+
+After simulating the bull market (I did this by multiplying the actual returns by -2 and adding that to the actual returns), we can clearly see the advantages of Long/Short portfolio strategy - during the favorable market conditions the portfolio is still overperforming the Buy-and-hold portfolio. On top of that, the volatility of the portfolio is much lower, compared to the big swings in the traditional portfolio.
+
+## Final Thoughts
+
+The study has shown some really interesting results and gave me a chance to investigate an interesting dataset, but an additional study on this subject would be appropriate. Here are a few things which could be improved in future work: 
+-   The companies in the Nasdaq Baltic Main List has data for just 30 securities, however the total number of features were 105 (if we exclude features related to pricing information) and 120 features (if we include them). Generally, we would want to have more observations than features, so the model could be improved by making it more parsimonious (checking and removing features that add little or no explanatory power to the model).
+-   Additionally, it is relatively difficult to get a working model with such a few observations, therefore it could be worthwile to repurpose this study to include more observations, for example by analysing the whole Central-Eastern European stock market or including other markets that have comparable charachteristics as the Baltic stock market.
