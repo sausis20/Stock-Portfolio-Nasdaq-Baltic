@@ -31,4 +31,26 @@ Also I pulled the closing stock prices from the period when the fundamental data
 
 ![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/logreturns.png)
 
-## Modeling the returns
+## Modeling current price
+
+[Link to the notebook](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/modeling_current_price.ipynb)
+
+Here I've modeled the securities intrinsic prices using the fundamental data found in the companies financial statements, and subsequently compared the model's residuals against the securities returns. The idea behind calculating residuals is a value investing principal of 'margin of safety', which is the difference between the current stock price in the market, vs. the price calculated subjectively by a value investor. We would expect that higher residuals (or in other words, how over or under valued a given security is compared to what the model estimates its value to be) would be correlated to the returns of the securities over the six month period since the data were scraped, as overvalued stocks would see their prices move down as the market adjusts toward their true value, and undervalued stocks would move up.
+
+We know that markets are at least partially efficient, meaning that the current prices of assets reliably reflect their value, with some error and noise present. However, it is also reasonable to assume that it takes some time for 'price discovery' to occur, or in other words for sellers and buyers to agree on the new price after the companies fundamental data has been published, meaning there might be an edge for the investor.
+
+First, I removed the pricing data, as leaving pricing related features and then trying to predict price would be detrimental to the model. At this point the dataset had many missing values, so I moved on to imputting it using various regressor and imputation techniques combinations. 
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/missingdata.png)
+
+I evaluated Linear Regression, Gradient Boosting Regressor, XGBRegressor and Random Forest Regressor, which proved to be the best performing regressor when measured using R-sqaured (the reasoning behind choosing R-squared as the scoring metric is explained in the notebook). We can see that in respect to R-squared score, the Iterative Imputation method performed the best compared to other imputation techinques, so I used this method combination (Random Forest Regressor and Iterative Imputation) to input the remaing missing values in the dataset.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/imputation.png)
+
+For the modeling of the current price, Gradient Boosting Regressor was the best performer with an R2 score of 0.26; I continued by doing grid search (tuning the model to find the best parameters to use with in model), and calculated the residuals (actual current price - price predicted by the model). Resulting residuals appeared to be symmetrically distributed around 0, meaning that there isn't any difference between the actual stock prices in the market and the price predicted by the model. However, there are two instances of positive residuals, which indicate these stocks could be potentially overvalued.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/residuals.png)
+
+To confirm the results, I run a simple linear regression to see if there is any relationship between the residuals and the returns. Unfortunately, the findings did't show such a relationship. The determination coefficient (R2) was just 0.03, which did not indicate a powerful statistical relationship. At this point it was cocluded that the hypothesis that the residuals of the asset pricing model would be correlated to the returns over the six month period since the time when the fundamental data was published is not supported.
+
+![](https://github.com/sausis20/Stock-Portfolio-Nasdaq-Baltic/blob/main/images/returnsresiduals.png)
